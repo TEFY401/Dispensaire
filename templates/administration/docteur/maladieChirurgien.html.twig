@@ -1,0 +1,75 @@
+{% extends 'administration/docteur/controleDocteur.html.twig' %}
+
+{% block contenu %}
+    <div class="text-left">
+        <a href="{{ path('chirurgien')}}" class="btn btn-success nav-item ml-1 mr-5">Retour</a>
+    </div>
+        
+    <div class="row mt-4">
+        <div class="col-9 mx-auto">
+                    <h2>Patient n°{{ pats.id }}</h2>
+            <table class="table text-center">
+                    <thead class="table-danger">
+                        <td>Nom</td>
+                        <td>Prenom</td>
+                        <td>Adresse-mail</td>
+                        <td>Profession</td>
+                    </thead>
+                <tbody>
+                    <td>{{ pats.nom }}</td>
+                    <td>{{ pats.prenom }}</td>
+                    <td>{{ pats.contact }}</td>
+                    <td>{{ pats.profession }}</td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                {{form_start(diagnostic)}}
+
+            <div class="col-6 mx-auto">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Anamnèse</legend>
+                            <div class="row g-3">
+                                <div class="col-md-12">            
+                                    {{form_row(diagnostic.Symptome, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-2">
+                                    {{form_row(diagnostic.Antecedents, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-10">
+                                    {{form_row(diagnostic.Traitements, {'attr':{'class': "form-control"}})}}
+                                </div>
+                            </div>
+                    </fieldset>
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Examen physique</legend>
+                            <div class="row g-3">
+                                <div class="col-md-2">    
+                                    {{form_row(diagnostic.temperature, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-3">    
+                                    {{form_row(diagnostic.pressionArterielle, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-7">    
+                                    {{form_row(diagnostic.gorge, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-6">    
+                                    {{form_row(diagnostic.tympans, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-6">    
+                                    {{form_row(diagnostic.palpation, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-6">    
+                                    {{form_row(diagnostic.auscultation, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-6">    
+                                    {{form_row(diagnostic.percussion, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                            </div>
+                    </fieldset>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-success" value="Enregistrer"> 
+                    </div>
+            </div>
+                    {{form_end(diagnostic)}}
+{% endblock %}

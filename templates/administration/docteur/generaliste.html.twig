@@ -1,0 +1,31 @@
+{% extends "administration/docteur/controleDocteur.html.twig" %}
+
+{% block contenu %}
+    <h1>Généraliste</h1>
+        <div class="row mt-4">
+        <div class="col-9 mx-auto">
+            <table class="table text-center">
+                    <thead class="table-danger">
+                        <td>Patient n°</td>
+                        <td>Nom</td>
+                        <td>Prenom</td>
+                        <td>Adresse-mail</td>
+                        <td>Profession</td>
+                        <td>Action</td>
+                    </thead>
+                {% for repo in reponse %}
+                <tbody>
+                    <td>{{ repo.id }}</td>
+                    <td>{{ repo.nom }}</td>
+                    <td>{{ repo.prenom }}</td>
+                    <td>{{ repo.contact }}</td>
+                    <td>{{ repo.profession }}</td>
+                    <td>
+                        <a href="{{ path('diagnosticGeneraliste', {'id': repo.id})}}" class="btn btn-success">Diagnostic</a>
+                    </td>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

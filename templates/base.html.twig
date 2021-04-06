@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('bootswatch/bootstrap.min.css') }}">
+    <title>Docteur</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('img/2749678.png') }}" alt="Hospital" width="50" heigth="20">
+        </a>
+                <div class="mx-auto" id="navbarColor02">
+                    <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ml-1 mr-5">
+                        <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item ml-1 mr-5">
+                        <a class="nav-link" href="{{ path('identifier') }}">S'identifier</a>
+                    </li>
+                    </ul>
+                </div>
+    </nav>
+    {% block contenu %}
+    <div class="row mt-4">
+        <div class="col-6 mx-auto">
+            <h1 class="display-3 text-center text-md-left">
+                Gestion des patients
+            </h1>
+        </div>
+    </div>
+
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-9 mx-auto">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-5 col-lg-6 order-md-1">
+                            
+                            <img src="{{ asset('img/images.jpg') }}" class="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 aos-init aos-animate" alt="Illustration de gestion d'accueil et ticketing file d'attente" data-aos="fade-up" data-aos-delay="100" data-pagespeed-url-hash="1707818343" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-6 order-md-2 aos-init aos-animate" data-aos="fade-up"> 
+                            <p class="lead text-center text-md-left text-muted mb-6 mb-lg-8">
+                                <ul>
+                                    <li>Système d'enregistrement des patients</li>
+                                    <li>Moyen rapide de consulter les patients</li>
+                                    <li>Mieux organiser le travail</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    <script src="{{ asset('bootstrap-5.0.0-beta3-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css') }}"></script>
+</body>
+</html>

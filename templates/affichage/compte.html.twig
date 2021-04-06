@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block div %}
+        <div class="row mt-4">
+            <div class="col-6 mx-auto">
+                {{form_start(formCompte)}}
+
+                <div class="mb-3">
+                    {{form_row(formCompte.AdresseMail, {'attr':{'class': "form-control"}})}}
+                </div>
+                <div class="mb-3">            
+                    {{form_row(formCompte.Password, {'attr':{'class': "form-control"}})}}
+                </div>
+                    <input type="submit" class="btn btn-success" value="S'inscrire"> 
+
+                {{form_end(formCompte)}}
+            </div>  
+        </div>
+{% endblock %}

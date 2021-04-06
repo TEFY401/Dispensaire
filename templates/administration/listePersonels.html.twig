@@ -1,0 +1,30 @@
+{% extends 'administration/controleAdministration.html.twig' %}
+
+{% block contenu %}
+    <div class="row mt-4">
+        <div class="col-9 mx-auto">
+            <table class="table text-center">
+                    <thead class="table-danger">
+                        <td>Personel n°</td>
+                        <td>Nom</td>
+                        <td>Prenom</td>
+                        <td>Contact</td>
+                        <td>Adresse Email</td>
+                        <td>Rôle</td>
+                        <td>Spécialité</td>
+                    </thead>
+                {% for contenu in liste %}
+                <tbody>
+                    <td>{{ contenu.id }}</td>
+                    <td>{{ contenu.nom }}</td>
+                    <td>{{ contenu.prenom }}</td>
+                    <td>{{ contenu.contact }}</td>
+                    <td>{{ contenu.adresseMail }}</td>
+                    <td>{{ contenu.role }}</td>
+                    <td>{{ contenu.speciality }}</td>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'administration/secretaire/controleSecretaire.html.twig' %}
+
+{% block contenu %}
+    <div class="row mt-4">
+        <div class="col-9 mx-auto">
+            <table class="table text-center">
+                    <thead class="table-danger">
+                        <td>Patient n°</td>
+                        <td>Nom</td>
+                        <td>Prenom</td>
+                        <td>Contact</td>
+                        <td>Profession</td>
+                        <td>Orienter vers</td>
+                    </thead>
+                {% for reponse in reponses %}
+                <tbody>
+                    <td>{{ reponse.id }}</td>
+                    <td>{{ reponse.nom }}</td>
+                    <td>{{ reponse.prenom }}</td>
+                    <td>{{ reponse.contact }}</td>
+                    <td>{{ reponse.profession }}</td>
+                    <td>{{ reponse.orienter }}</td>
+                </tbody>
+                {% endfor %}
+            </table>
+            <div class="text-right">
+                <a href="{{ path('controle_secretaire') }}" class="btn btn-success" >Retour</a>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}
