@@ -28,6 +28,11 @@ class Maladie
      */
     private $maladie;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Maladie
     public function setMaladie(string $maladie): self
     {
         $this->maladie = $maladie;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

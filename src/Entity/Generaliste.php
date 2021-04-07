@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\GeneralisteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -73,6 +72,11 @@ class Generaliste
      * @ORM\Column(type="string", length=255)
      */
     private $percussion;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -208,6 +212,18 @@ class Generaliste
     public function setPercussion(string $percussion): self
     {
         $this->percussion = $percussion;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

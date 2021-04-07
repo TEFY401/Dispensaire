@@ -11,6 +11,7 @@
                         <td>Prenom</td>
                         <td>Adresse-mail</td>
                         <td>Profession</td>
+                        <td>Action</td>
                     </thead>
                 {% for repo in reponse %}
                 <tbody>
@@ -19,6 +20,9 @@
                     <td>{{ repo.prenom }}</td>
                     <td>{{ repo.contact }}</td>
                     <td>{{ repo.profession }}</td>
+                    <td>
+                        <a href="{{ path('diagnosticOculiste', {'id': repo.id})}}" class="btn btn-success">Diagnostic</a>
+                    </td>
                 </tbody>
                 {% endfor %}
             </table>
