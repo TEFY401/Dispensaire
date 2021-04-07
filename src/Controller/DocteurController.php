@@ -47,7 +47,7 @@ class DocteurController extends AbstractController
     }
 
 
-    #[Route('/Docteur/diagnostic/{id<[0-9]+>}', name: 'diagnosticGeneraliste')]
+    #[Route('/Docteur/diagnostic/generaliste/{id<[0-9]+>}', name: 'diagnosticGeneraliste')]
     public function compte(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
         $maladie= new Maladie();
@@ -76,47 +76,59 @@ class DocteurController extends AbstractController
     }
 
 
-    #[Route('/Docteur/diagnostic/{id<[0-9]+>}', name: 'diagnosticOculiste')]
+    #[Route('/Docteur/diagnostic/oculiste/{id<[0-9]+>}', name: 'diagnosticOculiste')]
     public function compteOculi(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
+        $maladie= new Maladie();
+        $form1= $this->createForm(MaladieType::class, $maladie);
         $form = $this->createForm(GeneralisteType::class, $diagnostic);
         $date= new \DateTime();
 
         $form->handleRequest($request);
+        $form1->handleRequest($request);
         $pats= $repo->find($id);
-            if($form->isSubmitted() && $form->isValid()){
-                $diagnostic->setCreatedAt($date);
-                $diagnostic->setInscription($pats);
-                $manager->persist($diagnostic);
-                $manager->flush();
-                return $this->redirectToRoute('Oculiste');
+            if($form->isSubmitted() && $form1->isSubmitted() && $form1->isValid()){
+                    $diagnostic->setCreatedAt($date);
+                    $diagnostic->setInscription($pats);
+                    $maladie->setInscription($pats);
+                    $manager->persist($maladie);
+                    $manager->persist($diagnostic);
+                    $manager->flush();
+                return $this->redirectToRoute('oculiste');
             }
         
         return $this->render('administration/docteur/maladieOculiste.html.twig', [
             'diagnostic' => $form->createView(),
+            'maladie' => $form1->createView(),
             'pats' => $pats
         ]);
     }
 
 
-    #[Route('/Docteur/diagnostic/{id<[0-9]+>}', name: 'diagnosticChirurgien')]
+    #[Route('/Docteur/diagnostic/chirurgien/{id<[0-9]+>}', name: 'diagnosticChirurgien')]
     public function compteChirur(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
+        $maladie= new Maladie();
+        $form1= $this->createForm(MaladieType::class, $maladie);
         $form = $this->createForm(GeneralisteType::class, $diagnostic);
         $date= new \DateTime();
 
         $form->handleRequest($request);
+        $form1->handleRequest($request);
         $pats= $repo->find($id);
-            if($form->isSubmitted() && $form->isValid()){
-                $diagnostic->setCreatedAt($date);
-                $diagnostic->setInscription($pats);
-                $manager->persist($diagnostic);
-                $manager->flush();
+            if($form->isSubmitted() && $form1->isSubmitted() && $form1->isValid()){
+                    $diagnostic->setCreatedAt($date);
+                    $diagnostic->setInscription($pats);
+                    $maladie->setInscription($pats);
+                    $manager->persist($maladie);
+                    $manager->persist($diagnostic);
+                    $manager->flush();
                 return $this->redirectToRoute('chirurgien');
             }
         
         return $this->render('administration/docteur/maladieChirurgien.html.twig', [
             'diagnostic' => $form->createView(),
+            'maladie' => $form1->createView(),
             'pats' => $pats
         ]);
     }

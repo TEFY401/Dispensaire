@@ -2,12 +2,12 @@
 
 {% block contenu %}
     <div class="text-left">
-        <a href="{{ path('chirurgien')}}" class="btn btn-success nav-item ml-1 mr-5">Retour</a>
+        <a href="{{ path('chirurgien') }}" class="btn btn-success nav-item ml-1 mr-5">Retour</a>
     </div>
         
-    <div class="row mt-4">
+     <div class="row mt-4">
         <div class="col-9 mx-auto">
-                    <h2>Patient n°{{ pats.id }}</h2>
+                <h2>Patient n°{{ pats.id }}</h2>
             <table class="table text-center">
                     <thead class="table-danger">
                         <td>Nom</td>
@@ -26,21 +26,24 @@
     </div>
                 {{form_start(diagnostic)}}
 
-            <div class="col-6 mx-auto">
+            <div class="row g-2">
+                <div class="col-6 mx-auto">
                     <fieldset class="border p-2">
                         <legend class="w-auto">Anamnèse</legend>
                             <div class="row g-3">
                                 <div class="col-md-12">            
                                     {{form_row(diagnostic.Symptome, {'attr':{'class': "form-control"}})}}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-12">
                                     {{form_row(diagnostic.Antecedents, {'attr':{'class': "form-control"}})}}
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-12">
                                     {{form_row(diagnostic.Traitements, {'attr':{'class': "form-control"}})}}
                                 </div>
                             </div>
                     </fieldset>
+                </div>
+                <div class="col-6 mx-auto">
                     <fieldset class="border p-2">
                         <legend class="w-auto">Examen physique</legend>
                             <div class="row g-3">
@@ -67,9 +70,27 @@
                                 </div>
                             </div>
                     </fieldset>
+                </div>    
+            </div>
+
+                        {{form_start(maladie)}}
+            <div class="col-6 mx-auto">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Conclusion</legend>
+                        <div class="col-md-12"> 
+                            {{form_row(maladie.maladie, {'attr':{'class': "form-control"}})}} 
+                        </div>
+                        <div class="col-md-12"> 
+                            {{form_row(maladie.categorie, {'attr':{'class': "form-control"}})}} 
+                        </div>
+                    </fieldset>
+            </div>
+                        
+
                     <div class="text-center">
                         <input type="submit" class="btn btn-success" value="Enregistrer"> 
                     </div>
-            </div>
-                    {{form_end(diagnostic)}}
+
+                        {{form_end(maladie)}}
+            {{form_end(diagnostic)}}
 {% endblock %}
