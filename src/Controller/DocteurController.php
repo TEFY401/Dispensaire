@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Maladie;
+use App\Form\MaladieType;
 use App\Entity\Generaliste;
 use App\Entity\Inscription;
-use App\Entity\Maladie;
 use App\Form\GeneralisteType;
-use App\Form\MaladieType;
+use App\Repository\GeneralisteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InscriptionRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,29 +51,41 @@ class DocteurController extends AbstractController
     #[Route('/Docteur/diagnostic/generaliste/{id<[0-9]+>}', name: 'diagnosticGeneraliste')]
     public function compte(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
-        $maladie= new Maladie();
-        $form1= $this->createForm(MaladieType::class, $maladie);
         $form = $this->createForm(GeneralisteType::class, $diagnostic);
         $date= new \DateTime();
 
         $form->handleRequest($request);
-        $form1->handleRequest($request);
         $pats= $repo->find($id);
-            if($form->isSubmitted() && $form1->isSubmitted() && $form1->isValid()){
+            if($form->isSubmitted() && $form->isValid()){
                     $diagnostic->setCreatedAt($date);
                     $diagnostic->setInscription($pats);
-                    $maladie->setInscription($pats);
-                    $manager->persist($maladie);
                     $manager->persist($diagnostic);
                     $manager->flush();
-                    return $this->redirectToRoute('generaliste');
+                    return $this->redirectToRoute('maladie');
             }
             
         return $this->render('administration/docteur/maladieGeneraliste.html.twig', [
             'diagnostic' => $form->createView(),
-            'maladie' => $form1->createView(),
             'pats' => $pats
         ]);
+    }
+
+    #[Route('/Docteur/Diagnostic/Enregistrer_maladie/{id<[0-9]+>}', name: 'maladie')]
+    public function maladie(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
+        $maladie= new Maladie();
+        $form1= $this->createForm(MaladieType::class, $maladie);
+        $pats= $repo->find($id);
+        $form1->handleRequest($request);
+            if($form1->isSubmitted() && $form1->isValid()){
+                $maladie->setInscription($pats);
+                $manager->persist($maladie);
+                $manager->flush();
+                return $this->redirectToRoute('medicament');
+            }
+        return $this->render('administration/docteur/maladie.html.twig', [
+            'maladie' => $form1->createView(),
+            'pats' => $pats
+        ]);    
     }
 
 
@@ -133,5 +146,14 @@ class DocteurController extends AbstractController
         ]);
     }
 
+    #[Route('/docteur/ajout_medicament/{id<[0-9]+>}', name: 'medicament')]
+    public function medicament(InscriptionRepository $repo, GeneralisteRepository $test, int $id){
+        $person= $repo->find($id);
+        $tests= $test->findOneBy(array('inscription' => $person->getId()));
+        return $this->render('administration/docteur/medicament.html.twig', [
+            'person' => $person, 
+            'tests' => $tests
+            ]);
+    }
 
 }

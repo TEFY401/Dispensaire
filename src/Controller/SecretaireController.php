@@ -22,6 +22,7 @@ class SecretaireController extends AbstractController
             if($form->isSubmitted() && $form->isValid()){
                 $manager->persist($inscription);
                 $manager->flush();
+                return $this->redirectToRoute('voir');
             }
             return $this->render('administration/secretaire/controleSecretaire.html.twig', [
                 'formInscription' => $form->createView()

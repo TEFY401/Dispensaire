@@ -1,0 +1,21 @@
+{% extends "administration/docteur/maladieGeneraliste.html.twig" %}
+
+{% block stock %}
+                        {{form_start(maladie)}}
+                <div class="col-6 mx-auto">
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Conclusion</legend>
+                        <div class="col-md-12"> 
+                            {{form_row(maladie.maladie, {'attr':{'class': "form-control"}})}} 
+                        </div>
+                        <div class="col-md-12"> 
+                            {{form_row(maladie.categorie, {'attr':{'class': "form-control"}})}} 
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="text-center">
+                    <a href="{{ path('medicament', {'id': pats.id})}}" class="btn btn-success"><input type="submit"  class="btn btn-success" value="Enregistrer"></a>
+                </div> 
+                        {{form_end(maladie)}}
+{% endblock %}
+                        

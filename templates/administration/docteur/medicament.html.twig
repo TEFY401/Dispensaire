@@ -1,0 +1,80 @@
+{% extends 'administration/docteur/controleDocteur.html.twig' %}
+
+{% block contenu %}
+
+    <div class="text-center mt-3">
+        <h3>
+            {{ person.nom }}
+            {{ person.prenom }}
+        </h3> 
+    </div>
+    
+        <div class="col-6 mx-auto">
+            <fieldset class="border p-2">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Syptôme:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.Symptome }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Antécédents:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.Antecedents }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Traitements:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.Traitements }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Température:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.temperature }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Préssion Artérielle:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.pressionArterielle }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Observation du gorge:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ tests.gorge }}
+                    </div>
+                </div>
+            </div>
+            </fieldset>
+        </div>
+                        
+
+{% endblock %}
