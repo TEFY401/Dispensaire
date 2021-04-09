@@ -54,10 +54,21 @@ class Inscription
      */
     private $generalistes;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Medicament::class, mappedBy="inscription")
+     */
+    private $medicaments;
+
     public function __construct()
     {
         $this->maladies = new ArrayCollection();
         $this->generalistes = new ArrayCollection();
+        $this->medicaments = new ArrayCollection();
     }
 
 
@@ -185,6 +196,48 @@ class Inscription
             // set the owning side to null (unless already changed)
             if ($generaliste->getInscription() === $this) {
                 $generaliste->setInscription(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Medicament[]
+     */
+    public function getMedicaments(): Collection
+    {
+        return $this->medicaments;
+    }
+
+    public function addMedicament(Medicament $medicament): self
+    {
+        if (!$this->medicaments->contains($medicament)) {
+            $this->medicaments[] = $medicament;
+            $medicament->setInscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicament(Medicament $medicament): self
+    {
+        if ($this->medicaments->removeElement($medicament)) {
+            // set the owning side to null (unless already changed)
+            if ($medicament->getInscription() === $this) {
+                $medicament->setInscription(null);
             }
         }
 

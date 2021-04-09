@@ -27,7 +27,8 @@
     
 
 {% block stock %}
-    {{form_start(diagnostic)}}
+<div class="p-3 mb-2 bg-info text-dark">
+    {{form_start(diagnostic) }}
         <fieldset class="border p-2">
             <div class="row g-2">
                 <div class="col-6 mx-auto">
@@ -70,11 +71,12 @@
                 </div>   
             </div>
                     <div class="text-center">
-                        <a href="{{ path('maladie', {'id': pats.id})}}" class="btn btn-success"><input type="submit" class="btn btn-success" value="Ajouter la maladie"></a>
+                        <input type="submit" class="btn btn-success" value="Enregistrer">
                     </div> 
 
         {{form_end(diagnostic)}}
         </fieldset>
+</div>
 {% endblock %}  
     
             

@@ -4,12 +4,19 @@
 
     <div class="text-center mt-3">
         <h3>
-            {{ person.nom }}
-            {{ person.prenom }}
+            {{ pats.nom }}
+            {{ pats.prenom }}
         </h3> 
     </div>
-    
-        <div class="col-6 mx-auto">
+                <div class="text-center">
+                    <div class="p-3 mb-3 bg-danger text-white"><h2>MALADIE: {{ mal.maladie }}</h2></div>
+                </div>
+
+        <div class="row g-2">
+            <div class="col-6 mx-auto">
+                <div class="text-center">
+                    <label>Diagnostic du: </label> {{ test.createdAt | date("m/d/Y à h:i") }}
+                </div>
             <fieldset class="border p-2">
             <div class="row g-2">
                 <div class="col-md-6">
@@ -19,7 +26,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.Symptome }}
+                        {{ test.Symptome }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -29,7 +36,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.Antecedents }}
+                        {{ test.Antecedents }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -39,7 +46,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.Traitements }}
+                        {{ test.Traitements }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -49,7 +56,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.temperature }}
+                        {{ test.temperature }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -59,7 +66,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.pressionArterielle }}
+                        {{ test.pressionArterielle }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -69,12 +76,77 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ tests.gorge }}
+                        {{ test.gorge }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Observation du tympans:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.tympans }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Palpation:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.palpation }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Auscultation:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.auscultation }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Percussion:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.percussion }}
                     </div>
                 </div>
             </div>
             </fieldset>
         </div>
-                        
+
+        
+                <div class="col-6 mx-auto">
+                    {{form_start(medoc, {'action': path('generaliste')})}}
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Médicament</legend>
+                            <div class="row g-3">
+                                <div class="col-md-12">            
+                                    {{form_row(medoc.medicament, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{form_row(medoc.delai, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{form_row(medoc.description, {'attr':{'class': "form-control"}})}}
+                                </div>
+                            </div>
+                    </fieldset>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-success" value="Enregistrer">
+                        </div>
+                    {{form_end(medoc)}}
+                </div>
+        
+    </div>
+                    
 
 {% endblock %}

@@ -16,10 +16,12 @@ class SecretaireController extends AbstractController
     public function controlSecretaire(Request $request, EntityManagerInterface $manager){
         $inscription= new Inscription();
         $form = $this->createForm(InscriptionType::class, $inscription);
+        $date= new \DateTime();
 
         $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
+                $inscription->setCreatedAt($date);
                 $manager->persist($inscription);
                 $manager->flush();
                 return $this->redirectToRoute('voir');
