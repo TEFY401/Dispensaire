@@ -171,6 +171,7 @@ class DocteurController extends AbstractController
         $tous= $data->findAll();
             return $this->render('administration/docteur/listesPatients.html.twig', compact('tous'));
         }
+        
 
     #[Route('Docteur/traitement/{id<[0-9]+>}', name: 'regarder')]
     public function traitement(Inscription $repo, MaladieRepository $maladie, MedicamentRepository $medicament){
