@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\ChargeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\GeneralisteRepository;
 
 /**
- * @ORM\Entity(repositoryClass=GeneralisteRepository::class)
+ * @ORM\Entity(repositoryClass=ChargeRepository::class)
  */
-class Generaliste
+class Charge
 {
     /**
      * @ORM\Id
@@ -18,7 +18,7 @@ class Generaliste
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Inscription::class, inversedBy="generalistes")
+     * @ORM\ManyToOne(targetEntity=Inscription::class, inversedBy="charges")
      * @ORM\JoinColumn(nullable=false)
      */
     private $inscription;
@@ -26,32 +26,32 @@ class Generaliste
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $pressionArterielle;
+    private $symptome;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $gorge;
+    private $antecedents;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $tympans;
+    private $traitements;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $palpation;
+    private $temperature;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $auscultation;
+    private $poids;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $percussion;
+    private $longueurs;
 
     /**
      * @ORM\Column(type="datetime")
@@ -75,75 +75,74 @@ class Generaliste
         return $this;
     }
 
-
-    public function getPressionArterielle(): ?string
+    public function getSymptome(): ?string
     {
-        return $this->pressionArterielle;
+        return $this->symptome;
     }
 
-    public function setPressionArterielle(string $pressionArterielle): self
+    public function setSymptome(string $symptome): self
     {
-        $this->pressionArterielle = $pressionArterielle;
+        $this->symptome = $symptome;
 
         return $this;
     }
 
-    public function getGorge(): ?string
+    public function getAntecedents(): ?string
     {
-        return $this->gorge;
+        return $this->antecedents;
     }
 
-    public function setGorge(string $gorge): self
+    public function setAntecedents(string $antecedents): self
     {
-        $this->gorge = $gorge;
+        $this->antecedents = $antecedents;
 
         return $this;
     }
 
-    public function getTympans(): ?string
+    public function getTraitements(): ?string
     {
-        return $this->tympans;
+        return $this->traitements;
     }
 
-    public function setTympans(string $tympans): self
+    public function setTraitements(string $traitements): self
     {
-        $this->tympans = $tympans;
+        $this->traitements = $traitements;
 
         return $this;
     }
 
-    public function getPalpation(): ?string
+    public function getTemperature(): ?string
     {
-        return $this->palpation;
+        return $this->temperature;
     }
 
-    public function setPalpation(string $palpation): self
+    public function setTemperature(string $temperature): self
     {
-        $this->palpation = $palpation;
+        $this->temperature = $temperature;
 
         return $this;
     }
 
-    public function getAuscultation(): ?string
+    public function getPoids(): ?string
     {
-        return $this->auscultation;
+        return $this->poids;
     }
 
-    public function setAuscultation(string $auscultation): self
+    public function setPoids(string $poids): self
     {
-        $this->auscultation = $auscultation;
+        $this->poids = $poids;
 
         return $this;
     }
 
-    public function getPercussion(): ?string
+    public function getLongueurs(): ?string
     {
-        return $this->percussion;
+        return $this->longueurs;
     }
 
-    public function setPercussion(string $percussion): self
+    public function setLongueurs(string $longueurs): self
     {
-        $this->percussion = $percussion;
+        $this->longueurs = $longueurs;
 
         return $this;
     }

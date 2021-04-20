@@ -1,0 +1,57 @@
+{% extends "administration/docteur/controleDocteur.html.twig" %}
+
+{% block contenu %}
+    <h1>Généraliste</h1>
+        <div class="text-center">
+            <h2>{{ repo.nom }} {{ repo.prenom }}</h2>
+        </div>
+        {% for diagno in malaise %}
+            <div class="col-8 mx-auto">
+                <fieldset class="border p-2">
+                    <div class="p-3 mb-2 bg-info text-dark">
+                        <div class="text-center">
+                            <label>Diagnostic du: </label> {{ diagno.createdAt | date("m/d/Y à h:i") }}
+                        </div>
+                        <hr>
+                            <div class="row g-2">
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        <label>Maladie:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        {{ diagno.maladie }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        <label>Type de soin:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        {{ diagno.categorie }}
+                                    </div>
+                                </div>
+        {% for med in medoc %}
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        <label>Médicament:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="text-center">
+                                        {{ med.medicament }}
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </fieldset>
+            </div>
+        {% endfor %}
+{% endfor %}
+        <div class="text-center">
+            <a href="{{ path('listes') }}" class="btn btn-success">Retour</a>
+        </div>
+{% endblock %}

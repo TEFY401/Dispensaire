@@ -1,0 +1,57 @@
+{% extends 'administration/secretaire/controleSecretaire.html.twig' %}
+
+{% block contenu %}
+                <div class="row mt-4">
+                    <div class="col-9 mx-auto">
+                            <h2>Patient n°{{ pats.id }}</h2>
+                        <table class="table text-center">
+                                <thead class="table-danger">
+                                    <td>Nom</td>
+                                    <td>Prenom</td>
+                                    <td>Adresse-mail</td>
+                                    <td>Profession</td>
+                                </thead>
+                            <tbody>
+                                <td>{{ pats.nom }}</td>
+                                <td>{{ pats.prenom }}</td>
+                                <td>{{ pats.contact }}</td>
+                                <td>{{ pats.profession }}</td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        {{form_start(charge) }}
+        
+            <div class="col-6 mx-auto">
+                <div class="p-3 mb-2 bg-info text-dark">
+                    <fieldset class="border p-2">
+                            <div class="row g-3">
+                                <div class="col-md-12">            
+                                    {{form_row(charge.symptome, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{form_row(charge.antecedents, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-12">
+                                    {{form_row(charge.traitements, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-4">    
+                                    {{form_row(charge.temperature, {'attr':{'class': "form-control"}})}} 
+                                </div>
+                                <div class="col-md-4">
+                                    {{form_row(charge.poids, {'attr':{'class': "form-control"}})}}
+                                </div>
+                                <div class="col-md-4">
+                                    {{form_row(charge.longueurs, {'attr':{'class': "form-control"}})}}
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-danger" value="Enregistrer">
+                            </div>
+                    </fieldset>
+                </div>
+            </div>
+
+        {{form_end(charge)}}
+{% endblock %}

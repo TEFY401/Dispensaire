@@ -1,7 +1,7 @@
 {% extends 'administration/docteur/controleDocteur.html.twig' %}
 
 {% block contenu %}
-    <div class="text-left">
+    <div class="text-right mt-2">
         <a href="{{ path('generaliste')}}" class="btn btn-success nav-item ml-1 mr-5">Retour</a>
     </div>
         
@@ -27,32 +27,17 @@
     
 
 {% block stock %}
-<div class="p-3 mb-2 bg-info text-dark">
+
     {{form_start(diagnostic) }}
-        <fieldset class="border p-2">
-            <div class="row g-2">
-                <div class="col-6 mx-auto">
+
+            <div class="col-6 mx-auto">
+                <div class="p-3 mb-2 bg-info text-dark">
+                    <fieldset class="border p-2">
                             <div class="row g-3">
-                                <div class="col-md-12">            
-                                    {{form_row(diagnostic.Symptome, {'attr':{'class': "form-control"}})}}
-                                </div>
-                                <div class="col-md-12">
-                                    {{form_row(diagnostic.Antecedents, {'attr':{'class': "form-control"}})}}
-                                </div>
-                                <div class="col-md-12">
-                                    {{form_row(diagnostic.Traitements, {'attr':{'class': "form-control"}})}}
-                                </div>
-                            </div>
-                </div>
-                <div class="col-6 mx-auto">
-                            <div class="row g-3">
-                                <div class="col-md-2">    
-                                    {{form_row(diagnostic.temperature, {'attr':{'class': "form-control"}})}} 
-                                </div>
-                                <div class="col-md-3">    
+                                <div class="col-md-6">    
                                     {{form_row(diagnostic.pressionArterielle, {'attr':{'class': "form-control"}})}} 
                                 </div>
-                                <div class="col-md-7">    
+                                <div class="col-md-6">    
                                     {{form_row(diagnostic.gorge, {'attr':{'class': "form-control"}})}} 
                                 </div>
                                 <div class="col-md-6">    
@@ -68,15 +53,13 @@
                                     {{form_row(diagnostic.percussion, {'attr':{'class': "form-control"}})}} 
                                 </div>
                             </div>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-danger" value="Enregistrer">
+                                </div> 
+                    </fieldset>
                 </div>   
             </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-success" value="Enregistrer">
-                    </div> 
-
-        {{form_end(diagnostic)}}
-        </fieldset>
-</div>
+     {{form_end(diagnostic)}}
 {% endblock %}  
     
             

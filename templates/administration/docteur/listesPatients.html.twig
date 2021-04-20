@@ -1,0 +1,27 @@
+{% extends "administration/docteur/controleDocteur.html.twig" %}
+
+{% block contenu %}
+    <h1>Généraliste</h1>
+        <div class="row mt-4">
+        <div class="col-9 mx-auto">
+            <table class="table text-center">
+                    <thead class="table-danger">
+                        <td>Patient n°</td>
+                        <td>Nom</td>
+                        <td>Prenom</td>
+                        <td>Traitement</td>
+                    </thead>
+                    {% for pat in tous %}
+                <tbody>
+                    <td>{{ pat.id }}</td>
+                    <td>{{ pat.nom }}</td>
+                    <td>{{ pat.prenom }}</td>
+                    <td>
+                        <a href="{{ path('regarder', {'id': pat.id}) }}" class="btn btn-success">Voir</a>
+                    </td>
+                </tbody>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

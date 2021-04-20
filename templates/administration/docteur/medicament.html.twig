@@ -8,15 +8,19 @@
             {{ pats.prenom }}
         </h3> 
     </div>
-                <div class="text-center">
-                    <div class="p-3 mb-3 bg-danger text-white"><h2>MALADIE: {{ mal.maladie }}</h2></div>
-                </div>
 
+            {% for mal in mals %}
+                <div class="text-center">
+                    <div class="p-3 mb-3 bg-danger text-white"><h4>MALADIE: {{ mal.maladie }}</h4></div>
+                </div>
+            {% endfor %}
+    {% for diagno in test %}
         <div class="row g-2">
             <div class="col-6 mx-auto">
                 <div class="text-center">
-                    <label>Diagnostic du: </label> {{ test.createdAt | date("m/d/Y à h:i") }}
+                    <label>Diagnostic du: </label> {{ diagno.createdAt | date("m/d/Y à h:i") }}
                 </div>
+        {% for test in tests %}
             <fieldset class="border p-2">
             <div class="row g-2">
                 <div class="col-md-6">
@@ -26,7 +30,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.Symptome }}
+                        {{ test.symptome }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -36,7 +40,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.Antecedents }}
+                        {{ test.antecedents }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -46,7 +50,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.Traitements }}
+                        {{ test.traitements }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -61,12 +65,34 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
+                        <label>Poids:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.poids }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <label>Longueurs:</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        {{ test.longueurs }}
+                    </div>
+                </div>
+{% endfor %}
+
+                <div class="col-md-6">
+                    <div class="text-center">
                         <label>Préssion Artérielle:</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.pressionArterielle }}
+                        {{ diagno.pressionArterielle }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -76,7 +102,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.gorge }}
+                        {{ diagno.gorge }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -86,7 +112,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.tympans }}
+                        {{ diagno.tympans }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -96,7 +122,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.palpation }}
+                        {{ diagno.palpation }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -106,7 +132,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.auscultation }}
+                        {{ diagno.auscultation }}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -116,16 +142,20 @@
                 </div>
                 <div class="col-md-6">
                     <div class="text-center">
-                        {{ test.percussion }}
+                        {{ diagno.percussion }}
                     </div>
                 </div>
             </div>
             </fieldset>
         </div>
+    
+{% endfor %}
+
 
         
                 <div class="col-6 mx-auto">
-                    {{form_start(medoc, {'action': path('generaliste')})}}
+                    <div class="p-3 mb-2 bg-info text-dark">
+                    {{form_start(medoc)}}
                     <fieldset class="border p-2">
                         <legend class="w-auto">Médicament</legend>
                             <div class="row g-3">
@@ -144,9 +174,7 @@
                             <input type="submit" class="btn btn-success" value="Enregistrer">
                         </div>
                     {{form_end(medoc)}}
-                </div>
-        
-    </div>
-                    
+                    </div>  
+                </div>                  
 
 {% endblock %}

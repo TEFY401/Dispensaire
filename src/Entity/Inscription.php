@@ -64,11 +64,17 @@ class Inscription
      */
     private $medicaments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Charge::class, mappedBy="inscription")
+     */
+    private $charges;
+
     public function __construct()
     {
         $this->maladies = new ArrayCollection();
         $this->generalistes = new ArrayCollection();
         $this->medicaments = new ArrayCollection();
+        $this->charges = new ArrayCollection();
     }
 
 
@@ -238,6 +244,36 @@ class Inscription
             // set the owning side to null (unless already changed)
             if ($medicament->getInscription() === $this) {
                 $medicament->setInscription(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Charge[]
+     */
+    public function getCharges(): Collection
+    {
+        return $this->charges;
+    }
+
+    public function addCharge(Charge $charge): self
+    {
+        if (!$this->charges->contains($charge)) {
+            $this->charges[] = $charge;
+            $charge->setInscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharge(Charge $charge): self
+    {
+        if ($this->charges->removeElement($charge)) {
+            // set the owning side to null (unless already changed)
+            if ($charge->getInscription() === $this) {
+                $charge->setInscription(null);
             }
         }
 

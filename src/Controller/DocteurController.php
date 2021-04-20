@@ -2,20 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Charge;
 use App\Entity\Maladie;
 use App\Form\MaladieType;
+use App\Entity\Medicament;
 use App\Entity\Generaliste;
 use App\Entity\Inscription;
-use App\Entity\Medicament;
-use App\Form\GeneralisteType;
 use App\Form\MedicamentType;
-use App\Repository\GeneralisteRepository;
+use App\Form\GeneralisteType;
+use App\Repository\MaladieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\GeneralisteRepository;
 use App\Repository\InscriptionRepository;
+use App\Repository\MedicamentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Length;
 
 class DocteurController extends AbstractController
 {
@@ -90,58 +94,43 @@ class DocteurController extends AbstractController
 
 
     #[Route('/Docteur/diagnostic/oculiste/{id<[0-9]+>}', name: 'diagnosticOculiste')]
-    public function compteOculi(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
+    public function compteOculi(Inscription $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
-        $maladie= new Maladie();
-        $form1= $this->createForm(MaladieType::class, $maladie);
         $form = $this->createForm(GeneralisteType::class, $diagnostic);
-        $date= new \DateTime();
 
         $form->handleRequest($request);
-        $form1->handleRequest($request);
-        $pats= $repo->find($id);
             if($form->isSubmitted() && $form->isValid()){
-                    $diagnostic->setCreatedAt($date);
-                    $diagnostic->setInscription($pats);
-                    $maladie->setInscription($pats);
-                    $manager->persist($maladie);
+                    $diagnostic->setInscription($repo);
+                    $diagnostic->setCreatedAt(new \DateTime());
                     $manager->persist($diagnostic);
                     $manager->flush();
+                    return $this->redirectToRoute('maladie', ['id'=> $repo->getId()]);
             }
-        
+            
         return $this->render('administration/docteur/maladieOculiste.html.twig', [
             'diagnostic' => $form->createView(),
-            'maladie' => $form1->createView(),
-            'pats' => $pats
+            'pats' => $repo,
         ]);
     }
 
 
     #[Route('/Docteur/diagnostic/chirurgien/{id<[0-9]+>}', name: 'diagnosticChirurgien')]
-    public function compteChirur(InscriptionRepository $repo,Request $request,EntityManagerInterface $manager, int $id){
+    public function compteChirur(Inscription $repo,Request $request,EntityManagerInterface $manager, int $id){
         $diagnostic= new Generaliste();
-        $maladie= new Maladie();
-        $form1= $this->createForm(MaladieType::class, $maladie);
         $form = $this->createForm(GeneralisteType::class, $diagnostic);
-        $date= new \DateTime();
 
         $form->handleRequest($request);
-        $form1->handleRequest($request);
-        $pats= $repo->find($id);
-            if($form->isSubmitted() && $form1->isSubmitted() && $form1->isValid()){
-                    $diagnostic->setCreatedAt($date);
-                    $diagnostic->setInscription($pats);
-                    $maladie->setInscription($pats);
-                    $manager->persist($maladie);
+            if($form->isSubmitted() && $form->isValid()){
+                    $diagnostic->setInscription($repo);
+                    $diagnostic->setCreatedAt(new \DateTime());
                     $manager->persist($diagnostic);
                     $manager->flush();
-                return $this->redirectToRoute('chirurgien');
+                    return $this->redirectToRoute('maladie', ['id'=> $repo->getId()]);
             }
-        
+            
         return $this->render('administration/docteur/maladieChirurgien.html.twig', [
             'diagnostic' => $form->createView(),
-            'maladie' => $form1->createView(),
-            'pats' => $pats
+            'pats' => $repo,
         ]);
     }
 
@@ -154,10 +143,12 @@ class DocteurController extends AbstractController
         $pats= $repos->find($id);
 
         $repo= $manager->getRepository(Generaliste::class);
+        $repos= $manager->getRepository(Charge::class);
         $rep= $manager->getRepository(Maladie::class);
         
-        $mal= $rep->findOneBy(array('inscription' => $pats->getId()));
-        $test= $repo->findOneBy(array('inscription' => $pats->getId()));
+        $mal= $rep->findBy(array('inscription' => $pats->getId()), array('createdAt' => 'DESC'), 1);
+        $test= $repos->findBy(array('inscription' => $pats->getId()), array('createdAt' => 'DESC'), 1);
+        $tests= $repo->findBy(array('inscription' => $pats->getId()), array('createdAt' => 'DESC'), 1);
         $form->handleRequest($request); 
             if ($form->isSubmitted() && $form->isValid()) {
                 $medicament->setCreatedAt($date);
@@ -168,9 +159,24 @@ class DocteurController extends AbstractController
         return $this->render('administration/docteur/medicament.html.twig', [
             'medoc' => $form->createView(),
             'pats' => $pats,
-            'test' => $test,
-            'mal' => $mal
+            'tests' => $test,
+            'test' => $tests,
+            'mals' => $mal
         ]);    
     }
 
+
+    #[Route('Docteur/listes_des_patients', name: 'listes')]
+    public function listes(MaladieRepository $repo, InscriptionRepository $data){
+        $tous= $data->findAll();
+            return $this->render('administration/docteur/listesPatients.html.twig', compact('tous'));
+        }
+
+    #[Route('Docteur/traitement/{id<[0-9]+>}', name: 'regarder')]
+    public function traitement(Inscription $repo, MaladieRepository $maladie, MedicamentRepository $medicament){
+        $malaise= $maladie->findBy(array('inscription' => $repo->getId()), array('createdAt' => 'DESC'));
+        $medoc= $medicament->findBy(array('inscription' => $repo->getId()), array('createdAt' => 'DESC'));
+        return $this->render('administration/docteur/traitement.html.twig', compact('repo', 'malaise', 'medoc'));
+    }
 }
+

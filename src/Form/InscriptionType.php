@@ -20,7 +20,6 @@ class InscriptionType extends AbstractType
             ->add('orienter', ChoiceType::class, [
                 'choices' => [
                     'Généraliste' => 'generaliste',
-                    'Dentiste' => 'dentiste',
                     'Oculiste' => 'oculiste',
                     'Chirurgien' => 'chirurgien',
                 ]
