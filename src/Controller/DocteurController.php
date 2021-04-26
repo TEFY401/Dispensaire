@@ -10,6 +10,7 @@ use App\Entity\Generaliste;
 use App\Entity\Inscription;
 use App\Form\MedicamentType;
 use App\Form\GeneralisteType;
+use App\Repository\ChargeRepository;
 use App\Repository\MaladieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\GeneralisteRepository;
@@ -75,9 +76,12 @@ class DocteurController extends AbstractController
     }
 
     #[Route('/Docteur/Diagnostic/Enregistrer_maladie/{id<[0-9]+>}', name: 'maladie')]
-    public function maladie(Inscription $repo,Request $request,EntityManagerInterface $manager){
+    public function maladie(Inscription $repo,ChargeRepository $charge,GeneralisteRepository $diagnostic,Request $request,EntityManagerInterface $manager){
         $maladie= new Maladie();
         $form1= $this->createForm(MaladieType::class, $maladie);
+        $detail=$charge->findOneBy(array('inscription' => $repo), array('createdAt'=> 'DESC'));
+        $diagno=$diagnostic->findOneBy(array('inscription' => $repo), array('createdAt'=> 'DESC'));
+
         $form1->handleRequest($request);
             if($form1->isSubmitted() && $form1->isValid()){
                 $maladie->setInscription($repo);
@@ -88,7 +92,9 @@ class DocteurController extends AbstractController
             }
         return $this->render('administration/docteur/maladie.html.twig', [
             'maladie' => $form1->createView(),
-            'pats' => $repo
+            'pats' => $repo,
+            'charge' => $detail,
+            'diagnostic'=> $diagno
         ]);    
     }
 
@@ -136,11 +142,12 @@ class DocteurController extends AbstractController
 
     
     #[Route('/Docteur/ajout_medicament//{id<[0-9]+>}', name: 'medicament')]
-    public function medicament(InscriptionRepository $repos,Request $request,EntityManagerInterface $manager, int $id){
+    public function medicament(InscriptionRepository $repos,MaladieRepository $maladie,Request $request,EntityManagerInterface $manager, int $id){
         $medicament= new Medicament();
         $form= $this->createForm(MedicamentType::class, $medicament);
         $date= new \DateTime();
         $pats= $repos->find($id);
+        $malaise= $maladie->findOneBy(array('inscription'=> $pats->getId()));
 
         $repo= $manager->getRepository(Generaliste::class);
         $repos= $manager->getRepository(Charge::class);
@@ -152,9 +159,11 @@ class DocteurController extends AbstractController
         $form->handleRequest($request); 
             if ($form->isSubmitted() && $form->isValid()) {
                 $medicament->setCreatedAt($date);
+                $medicament->setMaladie($malaise);
                 $medicament->setInscription($pats);
                 $manager->persist($medicament);
                 $manager->flush();
+                return $this->redirectToRoute('listes');
             }
         return $this->render('administration/docteur/medicament.html.twig', [
             'medoc' => $form->createView(),
@@ -179,5 +188,6 @@ class DocteurController extends AbstractController
         $medoc= $medicament->findBy(array('inscription' => $repo->getId()), array('createdAt' => 'DESC'));
         return $this->render('administration/docteur/traitement.html.twig', compact('repo', 'malaise', 'medoc'));
     }
+
 }
 

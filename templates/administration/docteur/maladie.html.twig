@@ -1,8 +1,45 @@
 {% extends "administration/docteur/maladieGeneraliste.html.twig" %}
 
 {% block stock %}
+
+    <div class="col-12">
+        <div class="p-3 mb-2 bg-info text-dark">
+            <table class="table text-center">
+                    <thead class="table-white">
+                        <td>Symptôme</td>
+                        <td>Antécedents</td>
+                        <td>Traitements</td>
+                        <td>Température</td>
+                        <td>Poids</td>
+                        <td>Taille</td>
+                        <td>Préssion Artérielle</td>
+                        <td>Gorge</td>
+                        <td>Tympans</td>
+                        <td>Palpation</td>
+                        <td>Auscultation</td>
+                        <td>Percussion</td>
+                    </thead>
+                <tbody>
+                    <td>{{ charge.symptome }}</td>
+                    <td>{{ charge.antecedents }}</td>
+                    <td>{{ charge.traitements }}</td>
+                    <td>{{ charge.temperature }}</td>
+                    <td>{{ charge.poids }}</td>
+                    <td>{{ charge.longueurs }}</td>
+                    <td>{{ diagnostic.pressionArterielle }}</td>
+                    <td>{{ diagnostic.Gorge }}</td>
+                    <td>{{ diagnostic.tympans }}</td>
+                    <td>{{ diagnostic.palpation }}</td>
+                    <td>{{ diagnostic.auscultation }}</td>
+                    <td>{{ diagnostic.percussion }}</td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
     {{form_start(maladie) }}
-                
                 <div class="col-6 mx-auto">
                     <div class="p-3 mb-2 bg-info text-dark">
                         <fieldset class="border p-2">

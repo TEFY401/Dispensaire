@@ -43,6 +43,17 @@ class Medicament
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Maladie::class, inversedBy="medicaments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $maladie;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $reference;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +115,30 @@ class Medicament
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getMaladie(): ?Maladie
+    {
+        return $this->maladie;
+    }
+
+    public function setMaladie(?Maladie $maladie): self
+    {
+        $this->maladie = $maladie;
+
+        return $this;
+    }
+
+    public function getReference(): ?int
+    {
+        return $this->reference;
+    }
+
+    public function setReference(int $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }

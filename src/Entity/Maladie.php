@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MaladieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class Maladie
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Medicament::class, mappedBy="maladie")
+     */
+    private $medicaments;
+
+    public function __construct()
+    {
+        $this->medicaments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +99,36 @@ class Maladie
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Medicament[]
+     */
+    public function getMedicaments(): Collection
+    {
+        return $this->medicaments;
+    }
+
+    public function addMedicament(Medicament $medicament): self
+    {
+        if (!$this->medicaments->contains($medicament)) {
+            $this->medicaments[] = $medicament;
+            $medicament->setMaladie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicament(Medicament $medicament): self
+    {
+        if ($this->medicaments->removeElement($medicament)) {
+            // set the owning side to null (unless already changed)
+            if ($medicament->getMaladie() === $this) {
+                $medicament->setMaladie(null);
+            }
+        }
 
         return $this;
     }
