@@ -141,13 +141,14 @@ class DocteurController extends AbstractController
     }
 
     
-    #[Route('/Docteur/ajout_medicament//{id<[0-9]+>}', name: 'medicament')]
+    #[Route('/Docteur/ajout_medicament/{id<[0-9]+>}', name: 'medicament')]
     public function medicament(InscriptionRepository $repos,MaladieRepository $maladie,Request $request,EntityManagerInterface $manager, int $id){
         $medicament= new Medicament();
         $form= $this->createForm(MedicamentType::class, $medicament);
         $date= new \DateTime();
         $pats= $repos->find($id);
         $malaise= $maladie->findOneBy(array('inscription'=> $pats->getId()));
+        $reference= Date("Ymdhis");
 
         $repo= $manager->getRepository(Generaliste::class);
         $repos= $manager->getRepository(Charge::class);
@@ -161,16 +162,18 @@ class DocteurController extends AbstractController
                 $medicament->setCreatedAt($date);
                 $medicament->setMaladie($malaise);
                 $medicament->setInscription($pats);
+                $medicament->setReference($reference);
                 $manager->persist($medicament);
                 $manager->flush();
-                return $this->redirectToRoute('listes');
+                return $this->redirectToRoute('ordonance', ['id'=> $medicament->getId()]);
             }
         return $this->render('administration/docteur/medicament.html.twig', [
             'medoc' => $form->createView(),
             'pats' => $pats,
             'tests' => $test,
             'test' => $tests,
-            'mals' => $mal
+            'mals' => $mal,
+            'reference' => $reference
         ]);    
     }
 

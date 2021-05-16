@@ -159,6 +159,11 @@
                     <fieldset class="border p-2">
                         <legend class="w-auto">Médicament</legend>
                             <div class="row g-3">
+                                <div class="col-md-12">  
+                                    <div class="text-center">
+                                        <label>Réference: </label> {{ reference }}
+                                    </div>          
+                                </div>
                                 <div class="col-md-12">            
                                     {{form_row(medoc.medicament, {'attr':{'class': "form-control"}})}}
                                 </div>
