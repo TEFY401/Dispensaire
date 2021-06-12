@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Inscription;
 use App\Entity\Personel;
+use App\Form\PatientType;
 use App\Form\PersonelType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +17,8 @@ class AdministrateurController extends AbstractController
     
     #[Route('/', name: 'accueil')]
     public function accueil(){
+        $patient= new Inscription();
+        $form= $this->createForm(PatientType::class, $patient);
         return $this->render('base.html.twig');
     }
 
